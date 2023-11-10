@@ -9,10 +9,10 @@ import {
   ForgetPasswordEmail,
   ResendOTPEmail,
 } from "../email/UserEmail";
-import otpgenerator from "otp-generator";
 import { addMinutes, isAfter } from "date-fns";
 import { IUsers } from "../Interfaces/AllInterfaces";
 import { randomBytes } from "crypto";
+import { generateRefreshToken, getnerateAccessToken } from "../jwt/jwtFn";
 
 // Generate OTP
 function generateNumericOTP(): string {
@@ -193,9 +193,12 @@ export const UsersLogin = AsyncHandler(
         );
       }
 
+      const acceccToken = getnerateAccessToken(CheckUser?._id);
+      const refreshToken = generateRefreshToken(CheckUser?._id);
+
       return res.status(HTTPCODES.OK).json({
         message: "User Login successfull",
-        data: CheckUser?._id,
+        data: { acceccToken, refreshToken },
       });
     } catch (error: any) {
       return res.status(HTTPCODES.BAD_GATEWAY).json({
