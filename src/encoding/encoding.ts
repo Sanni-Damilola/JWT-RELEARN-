@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { HTTPCODES, MainAppError } from "../Utils/MainAppError";
+import { accessToken } from "../jwt/jwtFn";
 
 export const encryptData = (req: any, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
@@ -22,7 +23,7 @@ export const encryptData = (req: any, res: Response, next: NextFunction) => {
     const { verify } = jwt;
     verify(
       realToken,
-      "accesstoken",
+      accessToken,
       (err: Error | null, payload: JwtPayload | any) => {
         if (err) {
           throw new MainAppError({
