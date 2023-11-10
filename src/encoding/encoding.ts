@@ -1,12 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import { NextFunction, Response } from "express";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { HTTPCODES, MainAppError } from "../Utils/MainAppError";
 
-export const encryptData = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const encryptData = (req: any, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   try {
     if (!authorization) {
@@ -15,7 +11,30 @@ export const encryptData = (
         httpcode: HTTPCODES.UNAUTHORIZED,
       });
     }
-    console.log("jwt", jwt);
+    const realToken = authorization.split(" ")[1];
+
+    if (!realToken) {
+      throw new MainAppError({
+        message: "Unauthorized: Invalid token format",
+        httpcode: HTTPCODES.UNAUTHORIZED,
+      });
+    }
+    const { verify } = jwt;
+    verify(
+      realToken,
+      "accessTokenSecret",
+      (err: Error | null, payload: JwtPayload | any) => {
+        if (err) {
+          throw new MainAppError({
+            message: "Unauthorized: Invalid token",
+            httpcode: HTTPCODES.UNAUTHORIZED,
+          });
+        }
+
+        req.user = payload;
+        next();
+      }
+    );
   } catch (error: any) {
     return next(error);
   }
