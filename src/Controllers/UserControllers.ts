@@ -71,14 +71,13 @@ export const UsersRegistration = AsyncHandler(
 
       // Send account verification email
       AccountVerificationEmail(newUser);
-      const acceccToken = getnerateAccessToken(CheckUser?._id);
-      const refreshToken = generateRefreshToken(CheckUser?._id);
-
+      const acceccToken = getnerateAccessToken(newUser?._id);
+      const refreshToken = generateRefreshToken(newUser?._id);
 
       // Respond with success message
       return res.status(201).json({
         message: "Successfully created User (OTP Expires in 5 min)",
-        data: newUser?._id,
+        data: { acceccToken, refreshToken },
       });
     } catch (error) {
       return next(error);
