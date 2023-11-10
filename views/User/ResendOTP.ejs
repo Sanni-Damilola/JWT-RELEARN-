@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mula Wallets OTP Reset</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333333;
+        margin-top: 0;
+      }
+
+      p {
+        color: #555555;
+        line-height: 1.5;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .otp-container {
+        background-color: #f9f9f9;
+        padding: 6px;
+        border-radius: 5px;
+      }
+
+      .otp-code {
+        font-size: 24px;
+        font-weight: bold;
+        color: rgb(239, 76, 43); /* Updated color */
+        margin: 0;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: rgb(239, 76, 43); /* Updated color */
+        color: white;
+        text-decoration: none;
+        border-radius: 3px;
+        transition: all 500ms;
+      }
+
+      .button:hover {
+        background-color: rgb(239, 76, 43); /* Updated color */
+        color: white;
+        transform: scale(0.9);
+      }
+
+      .signature {
+        color: #777777;
+        font-style: italic;
+        margin-top: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Dear <%= fullName %>!</h1>
+      <p>
+        Thank you for signing up on Mula Wallets<an all Financial inclusive initiative>
+      </p>
+
+      <div>
+        <p>
+          Please verify that your email address is <b style="color: rgb(239, 76, 43);"><%= email %></b>,
+          and that you entered it when signing up on Mula Wallets.
+        </p>
+      </div>
+
+      <div class="otp-container">
+        <p>Your One-Time Password (OTP) is:</p>
+        <p class="otp-code"><%= OTP %></p>
+      </div>
+
+      <p>
+        You can use the above OTP to reset your account password.
+      </p>
+
+      <p>
+        If you didn't request this OTP, please ignore this message.
+      </p>
+
+      <a href="https://www.example.com/reset" class="button">Reset Password!</a>
+
+      <p>
+        Welcome to an all inclusive world of Business Registration, Business loans and worthwhile Investments
+      </p>
+
+      <p class="signature">Best regards,<br />Mula Wallets</p>
+    </div>
+  </body>
+</html>
