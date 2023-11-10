@@ -71,6 +71,9 @@ export const UsersRegistration = AsyncHandler(
 
       // Send account verification email
       AccountVerificationEmail(newUser);
+      const acceccToken = getnerateAccessToken(CheckUser?._id);
+      const refreshToken = generateRefreshToken(CheckUser?._id);
+
 
       // Respond with success message
       return res.status(201).json({

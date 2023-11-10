@@ -22,7 +22,7 @@ export const encryptData = (req: any, res: Response, next: NextFunction) => {
     const { verify } = jwt;
     verify(
       realToken,
-      "accessTokenSecret",
+      "accesstoken",
       (err: Error | null, payload: JwtPayload | any) => {
         if (err) {
           throw new MainAppError({
