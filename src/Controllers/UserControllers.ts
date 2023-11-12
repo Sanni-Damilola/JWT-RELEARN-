@@ -12,7 +12,13 @@ import {
 import { addMinutes, isAfter } from "date-fns";
 import { IUsers } from "../Interfaces/AllInterfaces";
 import { randomBytes } from "crypto";
-import { generateRefreshToken, getnerateAccessToken } from "../jwt/jwtFn";
+import {
+  generateRefreshToken,
+  getnerateAccessToken,
+  secretAccessToken,
+  secretRefreshToken,
+} from "../jwt/jwtFn";
+import jwt from "jsonwebtoken";
 
 // Generate OTP
 function generateNumericOTP(): string {
@@ -84,6 +90,51 @@ export const UsersRegistration = AsyncHandler(
     }
   }
 );
+
+export const refreshToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Extract the refresh token from the request body or headers
+    const refreshToken = req.body.refreshToken || req.headers["refresh-token"];
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Refresh token not provided",
+      });
+    }
+
+    // Verify the refresh token
+    jwt.verify(refreshToken, secretRefreshToken, (err: any, user: any) => {
+      if (err) {
+        return res.status(403).json({
+          message: "Invalid refresh token",
+        });
+      }
+
+      // If the refresh token is valid, generate a new access token
+      const newAccessToken = jwt.sign({ id: user.id }, secretAccessToken, {
+        expiresIn: "15m",
+      });
+
+      // Generate a new refresh token (optional, depending on your implementation)
+      const newRefreshToken = generateRefreshToken(user.id);
+
+      // Respond with the new access token and optionally the new refresh token
+      return res.status(200).json({
+        message: "Token refreshed successfully",
+        data: {
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken, // Include this line if you want to return a new refresh token
+        },
+      });
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 // User Verification
 export const UsersVerification = AsyncHandler(

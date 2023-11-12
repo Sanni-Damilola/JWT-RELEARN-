@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { HTTPCODES, MainAppError } from "../Utils/MainAppError";
-import { accessToken } from "../jwt/jwtFn";
+import { secretAccessToken } from "../jwt/jwtFn";
 
 export const encryptData = (req: any, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
@@ -24,11 +24,11 @@ export const encryptData = (req: any, res: Response, next: NextFunction) => {
     const { verify } = jwt;
     verify(
       realToken,
-      accessToken,
+      secretAccessToken,
       (err: Error | null, payload: JwtPayload | any) => {
         if (err) {
           throw new MainAppError({
-            message: "Unauthorized: Invalid token",
+            message: err.message,
             httpcode: HTTPCODES.UNAUTHORIZED,
           });
         }

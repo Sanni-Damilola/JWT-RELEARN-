@@ -12,6 +12,7 @@ import {
   UsersRegistration,
   UsersVerification,
   getALlUsers,
+  refreshToken,
   resendOTP,
   updateForgetPassword,
 } from "../Controllers/UserControllers";
@@ -29,7 +30,7 @@ UserRoute.route("/verify-user").post(
 UserRoute.route("/forget-password").post(UserForgetPassword);
 UserRoute.route("/change-password").patch(encryptData, updateForgetPassword);
 UserRoute.route("/:userID/resendotp").patch(encryptData, resendOTP);
-
+UserRoute.route("/refresh-token").post(refreshToken);
 UserRoute.route("/getallusers").get(getALlUsers);
 
 export default UserRoute;
