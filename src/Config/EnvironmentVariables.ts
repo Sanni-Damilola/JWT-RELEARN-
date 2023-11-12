@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: "./env/.env" });
 
-const EnvironmentVariables = {
+export const EnvironmentVariables = {
   DB_LIVEURI: process.env.DB_Connection_String,
   DB_LOCALURL: process.env.MongoDB_URL,
   PORT: process.env.PORT,
@@ -14,5 +14,3 @@ const EnvironmentVariables = {
   user: process.env.user as string,
   type: process.env.type as string,
 };
-
-export default EnvironmentVariables;
