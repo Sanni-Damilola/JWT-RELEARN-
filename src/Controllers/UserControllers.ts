@@ -127,7 +127,7 @@ export const refreshToken = (
         message: "Token refreshed successfully",
         data: {
           accessToken: newAccessToken,
-          refreshToken: newRefreshToken, // Include this line if you want to return a new refresh token
+          refreshToken: newRefreshToken,
         },
       });
     });
