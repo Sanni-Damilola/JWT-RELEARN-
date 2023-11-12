@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { EnvironmentVariables } from "./EnvironmentVariables";
+import EnvironmentVariables from "./EnvironmentVariables";
 
 const DB_Connection_String: string | undefined =
   EnvironmentVariables.DB_LOCALURL!;
