@@ -98,7 +98,7 @@ export const refreshToken = (
 ) => {
   try {
     // Extract the refresh token from the request body or headers
-    const refreshToken = req.body.refreshToken || req.headers["refresh-token"];
+    const { refreshToken } = req.body || req.headers["refresh-token"];
 
     if (!refreshToken) {
       return res.status(401).json({
@@ -107,10 +107,10 @@ export const refreshToken = (
     }
 
     // Verify the refresh token
-    jwt.verify(refreshToken, secretRefreshToken, (err: any, user: any) => {
+    jwt.verify(refreshToken, secretAccessToken, (err: any, user: any) => {
       if (err) {
         return res.status(403).json({
-          message: "Invalid refresh token",
+          message: err?.message,
         });
       }
 
