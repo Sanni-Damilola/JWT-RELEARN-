@@ -13,6 +13,7 @@ export const encryptData = (req: any, res: Response, next: NextFunction) => {
       });
     }
     const realToken = authorization.split(" ")[1];
+    console.log("realToken", realToken);
 
     if (!realToken) {
       throw new MainAppError({
